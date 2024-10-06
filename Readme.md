@@ -24,132 +24,29 @@
 - Easy running with docker compose
 
 
-## 3. Prerequisites
+## 2. Prerequisites
 
-### 3.0 Start
+### 2.0 Start
 
 Clone your created repository (I'm using the base for the example)
 
 ```sh
 git clone https://github.com/rohitmaxxx/Llama3_model_integration.git
 ```
-
-### 3.1 Environment Variables (.env)
-
-Then create a `.env` file inside `src` directory:
-
-```sh
-touch .env
-```
-
-Inside of `.env`, create the following app settings variables:
-
-```
-# ------------- app settings -------------
-APP_NAME="Your app name here"
-APP_DESCRIPTION="Your app description here"
-APP_VERSION="0.1"
-CONTACT_NAME="Your name"
-CONTACT_EMAIL="Your email"
-LICENSE_NAME="The license you picked"
-```
-
-For the database ([`if you don't have a database yet, click here`](#422-running-postgresql-with-docker)), create:
-
-```
-# ------------- database -------------
-POSTGRES_USER="your_postgres_user"
-POSTGRES_PASSWORD="your_password"
-POSTGRES_SERVER="your_server" # default "localhost", if using docker compose you should use "db"
-POSTGRES_PORT=5432 # default "5432", if using docker compose you should use "5432"
-POSTGRES_DB="your_db"
-```
-
-For database administration using PGAdmin create the following variables in the .env file
-
-```
-# ------------- pgadmin -------------
-PGADMIN_DEFAULT_EMAIL="your_email_address"
-PGADMIN_DEFAULT_PASSWORD="your_password"
-PGADMIN_LISTEN_PORT=80
-```
-
-To connect to the database, log into the PGAdmin console with the values specified in `PGADMIN_DEFAULT_EMAIL` and `PGADMIN_DEFAULT_PASSWORD`.
+### 2.1 Install Ollama and model
+Before start first install the ollama and then pull the **Llama3** model
 
 
-For crypt:
-Start by running
-
-```sh
-openssl rand -hex 32
-```
-
-And then create in `.env`:
-
-```
-# ------------- crypt -------------
-SECRET_KEY= # result of openssl rand -hex 32
-ALGORITHM= # pick an algorithm, default HS256
-ACCESS_TOKEN_EXPIRE_MINUTES= # minutes until token expires, default 30
-REFRESH_TOKEN_EXPIRE_DAYS= # days until token expires, default 7
-```
-
-Then for the first admin user:
-
-```
-# ------------- admin -------------
-ADMIN_NAME="your_name"
-ADMIN_EMAIL="your_email"
-ADMIN_USERNAME="your_username"
-ADMIN_PASSWORD="your_password"
-```
-
-For redis caching:
-
-```
-# ------------- redis cache-------------
-REDIS_CACHE_HOST="your_host" # default "localhost", if using docker compose you should use "redis"
-REDIS_CACHE_PORT=6379 # default "6379", if using docker compose you should use "6379"
-```
-
-And for client-side caching:
-
-```
-# ------------- redis client-side cache -------------
-CLIENT_CACHE_MAX_AGE=30 # default "30"
-```
-
-For ARQ Job Queues:
-
-```
-# ------------- redis queue -------------
-REDIS_QUEUE_HOST="your_host" # default "localhost", if using docker compose you should use "redis"
-REDIS_QUEUE_PORT=6379 # default "6379", if using docker compose you should use "6379"
-```
-
-# ------------- default rate limit settings -------------
-DEFAULT_RATE_LIMIT_LIMIT=10         # default=10
-DEFAULT_RATE_LIMIT_PERIOD=3600      # default=3600
-```
-
-And Finally the environment:
-
-```
-# ------------- environment -------------
-ENVIRONMENT="local"
-```
-
-`ENVIRONMENT` can be one of `local`, `staging` and `production`, defaults to local, and changes the behavior of api `docs` endpoints:
-
-- **local:** `/docs`, `/redoc` and `/openapi.json` available
-- **staging:** `/docs`, `/redoc` and `/openapi.json` available for superusers
-- **production:** `/docs`, `/redoc` and `/openapi.json` not available
-
-### 3.2 Docker Compose (preferred)
+### 2.2 Docker Compose (preferred)
 
 To do it using docker compose, ensure you have docker and docker compose installed, then:
-While in the base project directory (FastAPI-boilerplate here), run:
+While in the base project directory (Llama3_model_integration here), run:
 
+To run the seperate app for getting result from the llama3 model
+```sh
+python src/app2/main.py
+```
+Then run this command to run the main application
 ```sh
 docker compose up
 ```
